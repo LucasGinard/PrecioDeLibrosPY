@@ -3,11 +3,11 @@ from typing import Union
 from fastapi import FastAPI
 from fastapi.openapi.docs import get_swagger_ui_html, get_redoc_html
 
-titleDoc = "PrecioLibrosPY API"
+titleDoc = "PrecioDeLibrosPY API"
 urlIcon = "📚"
 
 app = FastAPI(
-	title= titleDoc,
+	title= "📚" + titleDoc,
     description= "",
     version= "0.0.1",
 	docs_url= None,
