@@ -25,10 +25,6 @@ def overridden_swagger():
 def overridden_redoc():
 	return get_redoc_html(openapi_url="/openapi.json", title= titleDoc, redoc_favicon_url=urlIcon)
 
-@app.get("/")
-def read_root():
-    return {"Hello": "World"}
-
 @app.get("/search/{search_query}")
 async def search_books(search_query: str):
     scraped_books = scrape_books(search_query)
