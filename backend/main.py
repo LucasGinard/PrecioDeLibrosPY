@@ -3,10 +3,7 @@ from typing import Union
 from fastapi import FastAPI
 from fastapi.openapi.docs import get_swagger_ui_html, get_redoc_html
 
-from model.BookData import BookData
 from scraping import scrape_books
-
-from typing import List
 
 titleDoc = "PrecioDeLibrosPY API"
 urlIcon = "📚"
