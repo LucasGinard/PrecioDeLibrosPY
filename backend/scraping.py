@@ -5,9 +5,9 @@ from bs4 import BeautifulSoup
 from typing import List
 
 def scrape_books(search_query: str) -> List[BookData]:
-    scraped_data = scrape_lpt(search_query)
-    scraped_data.append(scrape_el_lector(search_query))
-    return [scraped_data]
+    scraped_data_lpt = scrape_lpt(search_query)
+    scraped_data_el_lector = scrape_el_lector(search_query)
+    return scraped_data_lpt + scraped_data_el_lector
 
 
 def scrape_lpt(search_query: str) -> List[BookData]:
