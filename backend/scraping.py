@@ -26,7 +26,10 @@ def scrape_lpt(search_query: str) -> List[BookData]:
                         details_url=details_url, 
                         image_url=image_url, 
                         price=price,
-                        library= BookLibraryInfo(name="Libros para todos",website_url="https://lpt.com.py")
+                        library= BookLibraryInfo(name="Libros para todos",
+                                                 website_url="https://lpt.com.py",
+                                                 icon_url="https://lpt.com.py/images/logo/logo-simple-or.png"
+                                                 )
                         )
         book_list.append(book)
 
@@ -51,7 +54,10 @@ def scrape_el_lector(search_query: str) -> List[BookData]:
                         image_url=image_url, 
                         price=price, 
                         details_url=details_url,
-                        library= BookLibraryInfo(name="El Lector",website_url="https://ellector.com.py")
+                        library= BookLibraryInfo(name="El Lector",
+                                                 website_url="https://ellector.com.py",
+                                                 icon_url="https://ellector.com.py/assets/images/logo.png"
+                                                 )
                         )
         book_list.append(book)
 
@@ -82,7 +88,10 @@ def scrape_mundo_libros_py(search_query: str) -> List[BookData]:
                         image_url=image_url, 
                         price=price, 
                         details_url=details_url,
-                        library= BookLibraryInfo(name="Mundo Libros",website_url="https://www.mundolibrospy.com")
+                        library= BookLibraryInfo(name="Mundo Libros",
+                                                 website_url="https://www.mundolibrospy.com",
+                                                 icon_url= "http://www.mundolibrospy.com/img/cms/Mundo%20Libros.png"
+                                                 )
                         )
         book_list.append(book)
 

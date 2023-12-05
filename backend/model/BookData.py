@@ -3,6 +3,7 @@ from pydantic import BaseModel, HttpUrl
 class BookLibraryInfo(BaseModel):
     name: str
     website_url: HttpUrl
+    icon_url: HttpUrl
 
 class BookData(BaseModel):
     title: str
