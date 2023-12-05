@@ -44,7 +44,7 @@ def scrape_el_lector(search_query: str) -> List[BookData]:
         title = book_div.select_one('.book-title').text.strip()
         author = book_div.select_one('.book-author a').text.strip()
         image_url = book_div.select_one('.book-image-bg')['style'].split('url(')[1].split(')')[0].strip("'")
-        price = book_div.select_one('.book-price').text.strip()
+        price = book_div.select_one('.book-price').text.strip().replace('₲','Gs.')
         details_url = book_div.select_one('.book-image-bg')['href']
 
         book = BookData(title=title, author=author, 
@@ -59,18 +59,23 @@ def scrape_el_lector(search_query: str) -> List[BookData]:
 
 
 def scrape_mundo_libros_py(search_query: str) -> List[BookData]:
-    url = f"https://www.mundolibrospy.com/busqueda?controller=search&s={search_query.replace(' ', '+')}"
+    url = f"https://www.mundolibrospy.com/busqueda?controller=search&s={search_query}"
     response = requests.get(url)
     soup = BeautifulSoup(response.text, 'html.parser')
 
     book_list = []
-    for book_div in soup.select('.js-product-list'):
+    for product_item in soup.select('.product_list_item'):
         
-        title = book_div.select_one('h1.s_title_block a')['title']
-        author = book_div.select_one('.pro_extra_info_brand')['content']
-        image_url = book_div.select_one('.front-image')['data-src']
-        price = book_div.select_one('.price').text.strip()
-        details_url = book_div.select_one('h1.s_title_block a')['href']
+        title = product_item.select_one('h1.s_title_block a')['title']
+        author_tag = product_item.select_one('.pro_extra_info_brand')
+        author = author_tag.select_one('meta[itemprop="name"]')['content'] if author_tag else ''
+        image_url = product_item.select_one('.front-image')['data-src']
+
+        price_text = product_item.select_one('.price').text.strip().replace('₲', '')
+        price_digits = ''.join(char for char in price_text if char.isdigit() or char == '.')
+        price = f"Gs. {price_digits}"
+
+        details_url = product_item.select_one('h1.s_title_block a')['href']
 
         book = BookData(title=title, 
                         author=author, 
