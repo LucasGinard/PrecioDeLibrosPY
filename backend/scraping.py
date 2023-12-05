@@ -65,13 +65,12 @@ def scrape_mundo_libros_py(search_query: str) -> List[BookData]:
 
     book_list = []
     for book_div in soup.select('.js-product-list'):
-        if book_div.select_one('.badge-light') and "Sin Stock" in book_div.select_one('.badge-light').text:
-            continue
-        title = book_div.select_one('.book-title').text.strip()
-        author = book_div.select_one('.book-author a').text.strip()
-        image_url = book_div.select_one('.book-image-bg')['style'].split('url(')[1].split(')')[0].strip("'")
-        price = book_div.select_one('.book-price').text.strip()
-        details_url = book_div.select_one('.book-image-bg')['href']
+        
+        title = book_div.select_one('h1.s_title_block a')['title']
+        author = book_div.select_one('.pro_extra_info_brand')['content']
+        image_url = book_div.select_one('.front-image')['data-src']
+        price = book_div.select_one('.price').text.strip()
+        details_url = book_div.select_one('h1.s_title_block a')['href']
 
         book = BookData(title=title, 
                         author=author, 
