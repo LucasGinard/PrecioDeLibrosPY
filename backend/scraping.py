@@ -5,9 +5,7 @@ from bs4 import BeautifulSoup
 from typing import List
 
 def scrape_books(search_query: str) -> List[BookData]:
-    scraped_data_lpt = scrape_lpt(search_query)
-    scraped_data_el_lector = scrape_el_lector(search_query)
-    return scraped_data_lpt + scraped_data_el_lector
+    return scrape_lpt(search_query) + scrape_el_lector(search_query) + scrape_mundo_libros_py(search_query)
 
 
 def scrape_lpt(search_query: str) -> List[BookData]:
@@ -49,7 +47,39 @@ def scrape_el_lector(search_query: str) -> List[BookData]:
         price = book_div.select_one('.book-price').text.strip()
         details_url = book_div.select_one('.book-image-bg')['href']
 
-        book = BookData(title=title, author=author, image_url=image_url, price=price, details_url=details_url,library= BookLibraryInfo(name="El Lector",website_url="https://ellector.com.py"))
+        book = BookData(title=title, author=author, 
+                        image_url=image_url, 
+                        price=price, 
+                        details_url=details_url,
+                        library= BookLibraryInfo(name="El Lector",website_url="https://ellector.com.py")
+                        )
+        book_list.append(book)
+
+    return book_list
+
+
+def scrape_mundo_libros_py(search_query: str) -> List[BookData]:
+    url = f"https://www.mundolibrospy.com/busqueda?controller=search&s={search_query.replace(' ', '+')}"
+    response = requests.get(url)
+    soup = BeautifulSoup(response.text, 'html.parser')
+
+    book_list = []
+    for book_div in soup.select('.js-product-list'):
+        if book_div.select_one('.badge-light') and "Sin Stock" in book_div.select_one('.badge-light').text:
+            continue
+        title = book_div.select_one('.book-title').text.strip()
+        author = book_div.select_one('.book-author a').text.strip()
+        image_url = book_div.select_one('.book-image-bg')['style'].split('url(')[1].split(')')[0].strip("'")
+        price = book_div.select_one('.book-price').text.strip()
+        details_url = book_div.select_one('.book-image-bg')['href']
+
+        book = BookData(title=title, 
+                        author=author, 
+                        image_url=image_url, 
+                        price=price, 
+                        details_url=details_url,
+                        library= BookLibraryInfo(name="Mundo Libros",website_url="https://www.mundolibrospy.com")
+                        )
         book_list.append(book)
 
     return book_list
