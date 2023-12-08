@@ -1,5 +1,6 @@
 from fastapi import Depends, FastAPI, HTTPException
 from fastapi.openapi.docs import get_swagger_ui_html, get_redoc_html
+from fastapi.params import Query
 
 from scraping import scrape_books
 
@@ -19,10 +20,10 @@ app = FastAPI(
 	redoc_favicon_url=urlIcon
 )
 
-def validate_search_query(search_query: str = ""):
-    if not search_query or not search_query.strip():
+def validate_search_query(book: str = Query(..., alias="book")):
+    if not book or not book.strip():
         raise HTTPException(status_code=400, detail="empty value search")
-    return search_query.strip()
+    return book.strip()
 
 @app.get("/docs", include_in_schema=False)
 def overridden_swagger():
@@ -32,7 +33,7 @@ def overridden_swagger():
 def overridden_redoc():
 	return get_redoc_html(openapi_url="/openapi.json", title= titleDoc, redoc_favicon_url=urlIcon)
 
-@app.get("/search/{search_query}", response_model=List[BookData], tags=["Request Public"])
-async def search_books(search_query: str = Depends(validate_search_query)):
-    scraped_books = scrape_books(search_query)
+@app.get("/search", response_model=List[BookData], tags=["Requests Public"])
+async def search_books(book: str = Depends(validate_search_query)):
+    scraped_books = scrape_books(book)
     return scraped_books
