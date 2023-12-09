@@ -4,7 +4,7 @@ from bs4 import BeautifulSoup
 
 from typing import List
 
-def scrape_books(search_query: str) -> List[BookData]:
+def scrape_book(search_query: str) -> List[BookData]:
     return scrape_lpt(search_query) + scrape_el_lector(search_query) + scrape_mundo_libros_py(search_query)
 
 
@@ -21,6 +21,9 @@ def scrape_lpt(search_query: str) -> List[BookData]:
         image_url = book_div.select_one('img')['src']
         price = book_div.select_one('p.text-complementary-brown').text.strip()
 
+        if title == "ELENA DE AVALOR" and search_query != "ELENA DE AVALOR":
+            return book_list
+        
         book = BookData(title=title,
                         author=author, 
                         details_url=details_url, 
@@ -45,7 +48,8 @@ def scrape_el_lector(search_query: str) -> List[BookData]:
         if book_div.select_one('.badge-light') and "Sin Stock" in book_div.select_one('.badge-light').text:
             continue
         title = book_div.select_one('.book-title').text.strip()
-        author = book_div.select_one('.book-author a').text.strip()
+        author_element = book_div.select_one('.book-author a')
+        author = author_element.text.strip() if author_element else ""
         image_url = book_div.select_one('.book-image-bg')['style'].split('url(')[1].split(')')[0].strip("'")
         price = book_div.select_one('.book-price').text.strip().replace('₲','Gs.')
         details_url = book_div.select_one('.book-image-bg')['href']
