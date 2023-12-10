@@ -1,7 +1,8 @@
 from fastapi import Depends, FastAPI, HTTPException, Path
 from fastapi.openapi.docs import get_swagger_ui_html, get_redoc_html
 from fastapi.params import Query
-from model.LibraryEnum import LibraryEnum,scraping_functions
+
+from model.LibraryEnum import LibraryEnum, LibraryInfo,scraping_functions,libraries_info
 
 from scraping import scrape_book
 
@@ -54,11 +55,13 @@ async def search_books_in_specif_library(
     scraped_books = scraping_functions[library](search_query)
     return scraped_books
 
-@app.get("/libraries", response_model=list, tags=["Requests Public 🌎"])
+@app.get("/libraries", response_model=List[LibraryInfo], tags=["Requests Public 🌎"])
 async def get_libraries_availables():
     """
     Get a list of **available libraries** 📚.
 
+    use **library_path** if you want call /search/{library}
+
     Returns a list of valid library options.
     """
-    return valid_libraries
+    return libraries_info
