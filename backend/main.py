@@ -7,7 +7,7 @@ from scraping import scrape_book
 
 from model.BookData import BookData
 
-from typing import List, Union
+from typing import List
 
 titleDoc = "PrecioDeLibrosPY API"
 urlIcon = "📚"
@@ -34,7 +34,7 @@ def validate_search_query(book: str = Query(..., alias="book")):
         raise HTTPException(status_code=400, detail="empty value search")
     return book.strip()
 
-@app.get("/search", response_model=List[BookData], tags=["Requests Public"])
+@app.get("/search", response_model=List[BookData], tags=["Requests Public 🌎"])
 async def search_book(book: str = Depends(validate_search_query)):
     scraped_books = scrape_book(book)
     return scraped_books
@@ -46,10 +46,19 @@ async def validate_library(library: str = Path(..., title="Library", description
         raise HTTPException(status_code=400, detail=f"Invalid library. Valid options are: {', '.join(valid_libraries)}")
     return library
 
-@app.get("/search/{library}", response_model=List[BookData], tags=["Requests Public"])
+@app.get("/search/{library}", response_model=List[BookData], tags=["Requests Public 🌎"])
 async def search_books_in_specif_library(
      library: LibraryEnum = Depends(validate_library),
      search_query: str = Depends(validate_search_query)
      ):
     scraped_books = scraping_functions[library](search_query)
     return scraped_books
+
+@app.get("/libraries", response_model=list, tags=["Requests Public 🌎"])
+async def get_libraries_availables():
+    """
+    Get a list of **available libraries** 📚.
+
+    Returns a list of valid library options.
+    """
+    return valid_libraries
