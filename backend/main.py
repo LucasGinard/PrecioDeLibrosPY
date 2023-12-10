@@ -1,12 +1,13 @@
-from fastapi import Depends, FastAPI, HTTPException
+from fastapi import Depends, FastAPI, HTTPException, Path
 from fastapi.openapi.docs import get_swagger_ui_html, get_redoc_html
 from fastapi.params import Query
+from model.LibraryEnum import LibraryEnum,scraping_functions
 
 from scraping import scrape_book
 
 from model.BookData import BookData
 
-from typing import List
+from typing import List, Union
 
 titleDoc = "PrecioDeLibrosPY API"
 urlIcon = "📚"
@@ -36,4 +37,19 @@ def validate_search_query(book: str = Query(..., alias="book")):
 @app.get("/search", response_model=List[BookData], tags=["Requests Public"])
 async def search_book(book: str = Depends(validate_search_query)):
     scraped_books = scrape_book(book)
+    return scraped_books
+
+valid_libraries = list(library.value for library in LibraryEnum)
+
+async def validate_library(library: str = Path(..., title="Library", description=f"Librarys to search available: {', '.join(valid_libraries)}")):
+    if library not in valid_libraries:
+        raise HTTPException(status_code=400, detail=f"Invalid library. Valid options are: {', '.join(valid_libraries)}")
+    return library
+
+@app.get("/search/{library}", response_model=List[BookData], tags=["Requests Public"])
+async def search_books_in_specif_library(
+     library: LibraryEnum = Depends(validate_library),
+     search_query: str = Depends(validate_search_query)
+     ):
+    scraped_books = scraping_functions[library](search_query)
     return scraped_books
