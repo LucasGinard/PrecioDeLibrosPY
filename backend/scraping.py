@@ -1,5 +1,7 @@
 import requests
+
 from model.BookData import BookData, BookLibraryInfo
+
 from bs4 import BeautifulSoup
 
 from typing import List
