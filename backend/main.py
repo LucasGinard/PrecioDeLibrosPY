@@ -1,6 +1,7 @@
 from fastapi import Depends, FastAPI, HTTPException, Path
 from fastapi.openapi.docs import get_swagger_ui_html, get_redoc_html
 from fastapi.params import Query
+from fastapi.staticfiles import StaticFiles
 
 from model.LibraryEnum import LibraryEnum, LibraryInfo,scraping_functions,libraries_info
 
@@ -22,9 +23,11 @@ app = FastAPI(
 	redoc_favicon_url=urlIcon
 )
 
+app.mount("/static", StaticFiles(directory="static"), name="static")
+
 @app.get("/docs", include_in_schema=False)
 def overridden_swagger():
-	return get_swagger_ui_html(openapi_url="/openapi.json", title= titleDoc, swagger_favicon_url=urlIcon)
+	return get_swagger_ui_html(openapi_url="/openapi.json", title= titleDoc, swagger_favicon_url=urlIcon,swagger_css_url="/static/swagger-dark-mode.css")
 
 @app.get("/redoc", include_in_schema=False)
 def overridden_redoc():
