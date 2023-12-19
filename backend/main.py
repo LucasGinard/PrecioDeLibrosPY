@@ -45,9 +45,10 @@ async def search_book(book: str = Depends(validate_search_query)):
 
 valid_libraries = list(library.value for library in LibraryEnum)
 
-async def validate_library(library: str = Path(..., title="Library", description=f"Librarys to search available: {', '.join(valid_libraries)}")):
+async def validate_library(library: str = Path(..., title="Library", 
+                                               description=f"Librerías disponibles para buscar: [ {', '.join(valid_libraries)} ] puedes utilizar /libraries para obtener el listado")):
     if library not in valid_libraries:
-        raise HTTPException(status_code=400, detail=f"Invalid library. Valid options are: {', '.join(valid_libraries)}")
+        raise HTTPException(status_code=400, detail=f"No ingresaste una librería válida. Las opciones disponibles son: [ {', '.join(valid_libraries)}]")
     return library
 
 @app.get("/search/{library}", response_model=List[BookData], tags=["Requests Public 🌎"])
@@ -61,10 +62,7 @@ async def search_books_in_specif_library(
 @app.get("/libraries", response_model=List[LibraryInfo], tags=["Requests Public 🌎"])
 async def get_libraries_availables():
     """
-    Get a list of **available libraries** 📚.
-
-    use **library_path** if you want call /search/{library}
-
-    Returns a list of valid library options.
+   Obtén la lista de **librerías disponibles** 📚.\n
+   usa el response **library_path** para facilitar el listado de librerías disponibles de /search/{library}.\n
     """
     return libraries_info
