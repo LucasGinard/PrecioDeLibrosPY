@@ -5,7 +5,7 @@ from fastapi.staticfiles import StaticFiles
 
 from model.LibraryEnum import LibraryEnum, LibraryInfo,scraping_functions,libraries_info
 
-from scraping import scrape_book
+from backend.scraping.scrapingListBooks import scrape_book
 
 from model.BookData import BookData
 
