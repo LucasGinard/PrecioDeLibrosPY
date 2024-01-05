@@ -1,6 +1,7 @@
-# PrecioLibrosPY
+# PrecioLibrosPY 📚
 
-## Instrucciones para Levantar el Backend con FastAPI
+## Backend
+### Instrucciones para Levantar el Backend con FastAPI
 
 <details>
   <summary>Cómo levantar el Backend</summary>
@@ -25,6 +26,11 @@
     source venv/bin/activate
     ```
 
+  Instalar los requisitos:
+  ```bash
+    pip install -r requirements.txt
+  ```
+
   Prender la API con FastAPI:
 
   ```bash
@@ -33,7 +39,7 @@
 
 </details>
 
-## Instructions to Set Up the Backend with FastAPI
+### Instructions to Set Up the Backend with FastAPI
 
 <details>
   <summary>How to Set Up the Backend</summary>
@@ -57,6 +63,11 @@
     ```bash
     source venv/bin/activate
     ```
+
+  Install the requirements:
+  ```bash
+    pip install -r requirements.txt
+  ```
 
   Start the API with FastAPI:
 
