@@ -1,17 +1,19 @@
 # PrecioLibrosPY 📚
 
+## Frontend 🎨
+
 ## Backend 🐍
 ### Instrucciones para Levantar el Backend con FastAPI
 
 <details>
   <summary>Cómo levantar el Backend</summary>
 
-  ### Requisitos previos
+  ### 📃 Requisitos previos
   Asegúrate de tener Python y el paquete `venv` instalados antes de seguir estos pasos.
 
-  - Descarga e instala Python desde [python.org](https://www.python.org/downloads/).
-  - Asegúrate de tener el paquete `venv` instalado (por lo general, está incluido con las versiones más recientes de Python).
-
+  - Descarga e instala Python desde [python.org](https://www.python.org/downloads/)
+  - Asegúrate de tener el paquete `venv` instalado (por lo general, está incluido con las versiones más recientes de Python)
+  - abre la carpeta **Backend** desde tu terminal
 
   ### Crear un entorno virtual
 
@@ -51,11 +53,12 @@
 <details>
   <summary>How to Set Up the Backend</summary>
 
-  ### Prerequisites
+  ### 📃 Prerequisites
   Make sure you have Python and the `venv` package installed before proceeding with these steps.
 
-  - Download and install Python from [python.org](https://www.python.org/downloads/).
-  - Ensure that the `venv` package is installed (it is usually included with the latest versions of Python).
+  - Download and install Python from [python.org](https://www.python.org/downloads/)
+  - Ensure that the `venv` package is installed (it is usually included with the latest versions of Python)
+  - open the **Backend** with your terminal
 
   ### Create a virtual environment
 
