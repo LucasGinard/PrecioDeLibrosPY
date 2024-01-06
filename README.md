@@ -37,7 +37,7 @@
 
   Instalar los requisitos:
   ```bash
-    pip install -r requirements.txt
+  pip install -r requirements.txt
   ```
 
   Prender la API con FastAPI:
@@ -82,7 +82,7 @@
 
   Install the requirements:
   ```bash
-    pip install -r requirements.txt
+  pip install -r requirements.txt
   ```
 
   Start the API with FastAPI:
