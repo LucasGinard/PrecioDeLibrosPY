@@ -58,7 +58,7 @@
 
   - Download and install Python from [python.org](https://www.python.org/downloads/)
   - Ensure that the `venv` package is installed (it is usually included with the latest versions of Python)
-  - open the **Backend** with your terminal
+  - open **backend** folder with your terminal
 
   ### Create a virtual environment
 
