@@ -3,8 +3,7 @@ from enum import Enum
 
 from pydantic import BaseModel
 
-from backend.scraping.scrapingListBooks import scrape_el_lector, scrape_lpt, scrape_mundo_libros_py
-
+from ..scraping.scrapingListBooks import scrape_el_lector, scrape_lpt, scrape_mundo_libros_py
 
 class LibraryEnum(str, Enum):
     lpt = "lpt"
