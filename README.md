@@ -1,4 +1,4 @@
-# PrecioLibrosPY 📚
+# PrecioDeLibrosPY 📚
 
 ## Frontend 🎨
 
