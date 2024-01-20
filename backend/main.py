@@ -12,7 +12,7 @@ from model.BookData import BookData
 from typing import List
 
 titleDoc = "PrecioDeLibrosPY API"
-urlIcon = "📚"
+urlIcon = "/static/books.256x256.png"
 
 app = FastAPI(
 	title= "📚" + titleDoc,
