@@ -2,6 +2,7 @@ from fastapi import Depends, FastAPI, HTTPException, Path
 from fastapi.openapi.docs import get_swagger_ui_html, get_redoc_html
 from fastapi.params import Query
 from fastapi.staticfiles import StaticFiles
+from model.BookDetailData import BookDetailData
 
 from model.LibraryEnum import LibraryEnum, LibraryInfo,scraping_functions,libraries_info,scraping_detail_functions, validate_library_detail
 
@@ -74,7 +75,7 @@ def validate_search_link(detail_link: str = Query(..., alias="Link Book")):
     return detail_link
 
 
-@app.get("/detail/{library}", response_model=List[BookData], tags=["Requests Public 🌎"])
+@app.get("/detail/{library}", response_model=BookDetailData, tags=["Requests Public 🌎"])
 async def detail_book_in_specif_library(
      search_query: str = Depends(validate_search_link)
      ):
