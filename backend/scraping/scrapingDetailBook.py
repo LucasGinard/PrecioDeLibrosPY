@@ -12,21 +12,18 @@ def scrape_detail_book_el_lector(detailLink: str) -> BookDetailData:
     response = requests.get(detailLink)
     soup = BeautifulSoup(response.text, 'html.parser')
 
-    # Obtener el título del libro
     title = soup.select_one('.el-book-title-author h2').text.strip()
 
-    # Obtener el autor del libro
     author = soup.select_one('.el-book-title-author h5 a').text.strip()
 
-    # Obtener la URL de la imagen del libro
     image_url = soup.select_one('#productSlider a img')['src']
 
-    # Obtener el precio del libro
     price = soup.select_one('.el-pd-price span.precio-actual').text.strip()
 
-    # Obtener la descripción del libro
-    description = soup.select_one('.el-producto-descripcion p').text.strip()
-
+    description_element = soup.select_one('.col-12.el-producto-descripcion')
+    paragraphs = description_element.find_all('p') if description_element else []
+    
+    description = '\n'.join(paragraph.text.strip() for paragraph in paragraphs)
 
     return BookDetailData(
         title=title,
