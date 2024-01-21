@@ -1,9 +1,11 @@
 
 from enum import Enum
+from typing import Optional
 
 from pydantic import BaseModel
 
 from scraping.scrapingListBooks import scrape_el_lector, scrape_lpt, scrape_mundo_libros_py
+from scraping.scrapingDetailBook import scrape_detail_book_lpt, scrape_detail_book_el_lector, scrape_detail_book_mundo_libros_py
 
 class LibraryEnum(str, Enum):
     lpt = "lpt"
@@ -27,3 +29,15 @@ scraping_functions = {
     "lector": scrape_el_lector,
     "mundo": scrape_mundo_libros_py,
 }
+
+scraping_detail_functions = {
+    libraries_info[0].website_url : scrape_detail_book_lpt,
+    libraries_info[1].website_url: scrape_detail_book_el_lector,
+    libraries_info[2].website_url: scrape_detail_book_mundo_libros_py,
+}
+
+def validate_library_detail(detailLink: str) -> Optional[str]:
+    for library in libraries_info:
+        if library.website_url in detailLink:
+            return library.website_url
+    return None

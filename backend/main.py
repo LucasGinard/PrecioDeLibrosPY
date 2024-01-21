@@ -3,7 +3,7 @@ from fastapi.openapi.docs import get_swagger_ui_html, get_redoc_html
 from fastapi.params import Query
 from fastapi.staticfiles import StaticFiles
 
-from model.LibraryEnum import LibraryEnum, LibraryInfo,scraping_functions,libraries_info
+from model.LibraryEnum import LibraryEnum, LibraryInfo,scraping_functions,libraries_info,scraping_detail_functions, validate_library_detail
 
 from scraping.scrapingListBooks import scrape_book
 
@@ -66,3 +66,20 @@ async def get_libraries_availables():
    usa el response **library_path** para facilitar el listado de librerías disponibles de /search/{library}.\n
     """
     return libraries_info
+
+def validate_search_link(detail_link: str = Query(..., alias="Link Book")):
+    if not detail_link or not detail_link.strip():
+        raise HTTPException(status_code=400, detail="Empty value search")
+
+    return detail_link
+
+
+@app.get("/detail/{library}", response_model=List[BookData], tags=["Requests Public 🌎"])
+async def detail_book_in_specif_library(
+     search_query: str = Depends(validate_search_link)
+     ):
+    library = validate_library_detail(search_query)
+    if library == None:
+         raise HTTPException(status_code=400, detail="Invalid url")
+    
+    return scraping_detail_functions[library](search_query)
