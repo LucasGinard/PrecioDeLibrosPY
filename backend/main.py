@@ -83,4 +83,8 @@ async def detail_book_in_specif_library(
     if library == None:
          raise HTTPException(status_code=400, detail="Invalid url")
     
-    return scraping_detail_functions[library](search_query)
+    detailBook = scraping_detail_functions[library](search_query)
+    if detailBook == None:
+         raise HTTPException(status_code=503, detail="Service Unavailable")
+    
+    return 
