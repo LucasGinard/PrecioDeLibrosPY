@@ -1,3 +1,4 @@
+from typing import List
 from pydantic import BaseModel, HttpUrl
 
 class BookDetailData(BaseModel):
@@ -6,6 +7,6 @@ class BookDetailData(BaseModel):
     image_url: HttpUrl
     price: str
     description: str
-    category:str
+    category:List[str]
     isbn: str
     

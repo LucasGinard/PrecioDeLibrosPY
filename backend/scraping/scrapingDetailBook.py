@@ -14,7 +14,7 @@ def scrape_detail_book_lpt(detailLink: str) -> Optional[BookDetailData]:
             image_url= HttpUrl(url="https://example.com"),
             price="categorsadies",
             description="catedasgories",
-            category="categdasories",
+            category=["categdasories"],
             isbn="isdasbn"
         )
     except:
@@ -44,7 +44,7 @@ def scrape_detail_book_el_lector(detailLink: str) ->  Optional[BookDetailData]:
             image_url=image_url,
             price=price,
             description=description,
-            category="categories",
+            category=["categories"],
             isbn="isbn"
         )
     except:
@@ -62,13 +62,24 @@ def scrape_detail_book_mundo_libros_py(detailLink: str) -> Optional[BookDetailDa
         a_tag = soup.find('a', class_='replace-2x')
         imageURL = a_tag.get('href', None)
 
-        price_text = soup.select_one('.price').text.strip().replace('₲','Gs.')
+        price_text = soup.select_one('.price').text.strip().replace('.₲','Gs.')
         price_digits = ''.join(char for char in price_text if char.isdigit() or char == '.')
         price = f"Gs. {price_digits}"
 
         description = soup.select_one('.product-description').text.strip()
 
-        isbn = soup.select_one('.pro_extra_info_content').text.strip()
+        tags_container = soup.find('div', class_='product-info-tags')
+        tags_links = tags_container.find_all('a')
+        categories = [tag.get_text(strip=True) for tag in tags_links]
+
+        isbn = ""
+
+        reference_div = soup.find('div', class_='product-reference pro_extra_info flex_container')
+        if reference_div:
+            reference_label = reference_div.find('span', class_='pro_extra_info_label')
+
+            if reference_label and 'Referencia' in reference_label.text:
+                isbn = reference_div.find('div', class_='pro_extra_info_content').text.strip()
 
         return BookDetailData(
             title=title,
@@ -76,7 +87,7 @@ def scrape_detail_book_mundo_libros_py(detailLink: str) -> Optional[BookDetailDa
             image_url= imageURL,
             price=price,
             description=description,
-            category="categdasories",
+            category=categories,
             isbn=isbn
         )
     except:
