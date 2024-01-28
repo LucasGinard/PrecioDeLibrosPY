@@ -1,5 +1,4 @@
 from typing import Optional
-from pydantic import HttpUrl
 import requests
 
 from bs4 import BeautifulSoup
