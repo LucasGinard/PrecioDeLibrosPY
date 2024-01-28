@@ -13,14 +13,44 @@ def scrape_detail_book_lpt(detailLink: str) -> Optional[BookDetailData]:
 
         title = soup.select_one('h2').text.strip()
 
+        image_div = soup.find('div', class_='w-56 xl:w-64 h-76 sm:h-82 xl:h-86 my-6 sm:my-12 xl:my-24 bg-center bg-no-repeat bg-cover')
+
+        if image_div:
+            style_attribute = image_div.get('style', '')
+
+            start_index = style_attribute.find('background:url(')
+            end_index = style_attribute.find(')')
+
+            if start_index != -1 and end_index != -1:
+                image_url = style_attribute[start_index + len('background:url('):end_index].strip()
+                
+
+        price_div = soup.find('div', class_='border-b border-grey-dark mb-8')
+        price_span = price_div.find('span', class_='font-mtregular text-secondary text-2xl')
+        price = price_span.text.strip() if price_span else 'Precio no disponible'
+
+        info_divs = soup.find_all('div', class_='flex pb-2')
+        for div in info_divs:
+            paragraph = div.find('p', class_='font-mtregular text-secondary')
+            
+            if paragraph:
+                text = paragraph.text.strip()
+
+                if 'Autor:' in text:
+                    author = div.find('p', class_='font-mtbold text-v-greenpl-3').text.strip()
+                elif 'Código:' in text:
+                    isbn = div.find('p', class_='font-mtbold text-v-greenpl-3').text.strip()
+                elif 'Categoría:' in text:
+                    category = div.find('p', class_='font-mtbold text-v-greenpl-3').text.strip()
+                
         return BookDetailData(
             title=title,
-            author="catasdegories",
-            image_url= HttpUrl(url="https://example.com"),
-            price="categorsadies",
-            description="catedasgories",
-            category=["categdasories"],
-            isbn="isdasbn"
+            author=author,
+            image_url= image_url,
+            price=price,
+            description="",
+            category=[category],
+            isbn=isbn
         )
     except:
         return None
