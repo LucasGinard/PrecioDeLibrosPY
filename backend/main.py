@@ -75,16 +75,18 @@ def validate_search_link(detail_link: str = Query(..., alias="Link Book")):
     return detail_link
 
 
-@app.get("/detail/{library}", response_model=BookDetailData, tags=["Requests Public 🌎"])
+@app.get("/detail/", response_model=BookDetailData, tags=["Requests Public 🌎"])
 async def detail_book_in_specif_library(
      search_query: str = Depends(validate_search_link)
      ):
     library = validate_library_detail(search_query)
+
     if library == None:
          raise HTTPException(status_code=400, detail="Invalid url")
     
     detailBook = scraping_detail_functions[library](search_query)
+    
     if detailBook == None:
          raise HTTPException(status_code=503, detail="Service Unavailable")
     
-    return 
+    return detailBook
