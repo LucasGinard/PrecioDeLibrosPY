@@ -8,8 +8,13 @@ from model.BookDetailData import BookDetailData
 
 def scrape_detail_book_lpt(detailLink: str) -> Optional[BookDetailData]:
     try:
+        response = requests.get(detailLink)
+        soup = BeautifulSoup(response.text, 'html.parser')
+
+        title = soup.select_one('h2').text.strip()
+
         return BookDetailData(
-            title="asd",
+            title=title,
             author="catasdegories",
             image_url= HttpUrl(url="https://example.com"),
             price="categorsadies",
