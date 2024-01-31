@@ -7,6 +7,7 @@ from model.BookDetailData import BookDetailData
 from model.LibraryEnum import LibraryEnum, LibraryInfo,scraping_functions,libraries_info,scraping_detail_functions, validate_library_detail
 
 from scraping.scrapingListBooks import scrape_book
+from scraping.scrapingStockBook import scrape_stock_book_lpt
 
 from model.BookData import BookData
 
@@ -85,6 +86,18 @@ async def detail_book_in_specif_library(
          raise HTTPException(status_code=400, detail="Invalid url")
     
     detailBook = scraping_detail_functions[library](search_query)
+    
+    if detailBook == None:
+         raise HTTPException(status_code=503, detail="Service Unavailable")
+    
+    return detailBook
+
+@app.get("/stock/", response_model=str, tags=["Requests Public 🌎"])
+async def get_stock_book_for_lpt_library(
+     search_stock: str = Depends(validate_search_link)
+     ):
+
+    detailBook = scrape_stock_book_lpt(search_stock)
     
     if detailBook == None:
          raise HTTPException(status_code=503, detail="Service Unavailable")
