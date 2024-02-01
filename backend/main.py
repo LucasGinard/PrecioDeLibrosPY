@@ -80,6 +80,12 @@ def validate_search_link(detail_link: str = Query(..., alias="Link Book")):
 async def detail_book_in_specif_library(
      search_query: str = Depends(validate_search_link)
      ):
+    """
+    Obtén el detalle del libro buscado envasa al link del parámetro details_url
+    - Descripción del libro (excepto en lpt)
+    - El ISBN (código Internacional normalizado para libros)
+    - Categorias del libro
+    """
     library = validate_library_detail(search_query)
 
     if library == None:
@@ -96,7 +102,9 @@ async def detail_book_in_specif_library(
 async def get_stock_book_for_lpt_library(
      search_stock: str = Depends(validate_search_link)
      ):
-
+    """
+    Obtén el stock del libro buscado unicamente disposible en libreria Libro para todos (lpt)
+    """
     detailBook = scrape_stock_book_lpt(search_stock)
     
     if detailBook == None:
