@@ -1,6 +1,10 @@
+from pydantic import HttpUrl
+
 import requests
 
-from model.BookData import BookData, BookLibraryInfo
+from model.LibraryEnum import LibraryInfo
+
+from model.BookData import BookData
 
 from bs4 import BeautifulSoup
 
@@ -32,7 +36,7 @@ def scrape_lpt(search_query: str) -> List[BookData]:
                             details_url=details_url, 
                             image_url=image_url, 
                             price=price,
-                            library= BookLibraryInfo(name="Libros para todos",
+                            library= LibraryInfo(name="Libros para todos",
                                                     website_url="https://lpt.com.py",
                                                     icon_url="https://lpt.com.py/images/logo/logo-simple-or.png"
                                                     )
@@ -45,36 +49,39 @@ def scrape_lpt(search_query: str) -> List[BookData]:
 
 def scrape_el_lector(search_query: str) -> List[BookData]:
     try:
-        url = f"https://ellector.com.py/shop?filters%5Bname%5D={search_query}"
+        url = f"https://ellector.com.py/productos/buscar.html?buscando={search_query}"
         response = requests.get(url)
         soup = BeautifulSoup(response.text, 'html.parser')
 
         book_list = []
-        for book_div in soup.select('.el-product-grid-item'):
-            if book_div.select_one('.badge-light') and "Sin Stock" in book_div.select_one('.badge-light').text:
-                continue
-            title = book_div.select_one('.book-title').text.strip()
-            author_element = book_div.select_one('.book-author a')
-            author = author_element.text.strip() if author_element else ""
-            image_url = book_div.select_one('.book-image-bg')['style'].split('url(')[1].split(')')[0].strip("'")
-            price = book_div.select_one('.book-price').text.strip().replace('₲','Gs.')
-            details_url = book_div.select_one('.book-image-bg')['href']
 
-            book = BookData(title=title, author=author, 
-                            image_url=image_url, 
-                            price=price, 
-                            details_url=details_url,
-                            library= BookLibraryInfo(name="El Lector",
-                                                    website_url="https://ellector.com.py",
-                                                    icon_url="https://ellector.com.py/assets/images/logo.png"
-                                                    )
-                            )
-            book_list.append(book)
+        books_container = soup.find('div', class_='row evende-products-overflow no-border-last-line')
+
+        if books_container:
+            for book_div in books_container.find_all('div', class_='card'):
+                title = book_div.select_one('.card-title a').text.strip()
+                author = book_div.select_one('.product-author a').text.strip()
+                price = book_div.select_one('.product-price .price-amount').text.strip().replace('₲', 'Gs.')
+                image_relative_url = book_div.select_one('.card-img-top')['src']
+                image_url = f"https://ellector.com.py{image_relative_url}"
+                details_relative_url = book_div.select_one('.card-title a')['href']
+                details_url = f"https://ellector.com.py{details_relative_url}"
+
+                book = BookData(title=title, author=author, 
+                                image_url=HttpUrl(url=image_url), 
+                                price=price, 
+                                details_url=HttpUrl(url=details_url),
+                                library= LibraryInfo(name="El Lector", 
+                                                     website_url="https://ellector.com.py", 
+                                                     icon_url="https://ellector.com.py/assets/img/logo_ellector_v2.svg", 
+                                                     library_path="lector")
+                                                     )
+                book_list.append(book)
 
         return book_list
-    except:
+    except Exception as e:
+        print(f"Error: {e}")
         return []
-
 
 def scrape_mundo_libros_py(search_query: str) -> List[BookData]:
     try:
@@ -101,10 +108,10 @@ def scrape_mundo_libros_py(search_query: str) -> List[BookData]:
                             image_url=image_url, 
                             price=price, 
                             details_url=details_url,
-                            library= BookLibraryInfo(name="Mundo Libros",
-                                                    website_url="https://www.mundolibrospy.com",
-                                                    icon_url= "http://www.mundolibrospy.com/img/cms/Mundo%20Libros.png"
-                                                    )
+                            library= LibraryInfo(name="Mundo Libros", 
+                                                 website_url="https://www.mundolibrospy.com", 
+                                                 icon_url="http://www.mundolibrospy.com/img/cms/Mundo%20Libros.png", 
+                                                 library_path="mundo")
                             )
             book_list.append(book)
 

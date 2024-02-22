@@ -20,7 +20,7 @@ class LibraryInfo(BaseModel):
 
 libraries_info = [
     LibraryInfo(name="Libros para todos", website_url="https://lpt.com.py", icon_url="https://lpt.com.py/images/logo/logo-simple-or.png", library_path="lpt"),
-    LibraryInfo(name="El Lector", website_url="https://ellector.com.py", icon_url="https://ellector.com.py/assets/images/logo.png", library_path="lector"),
+    LibraryInfo(name="El Lector", website_url="https://ellector.com.py", icon_url="https://ellector.com.py/assets/img/logo_ellector_v2.svg", library_path="lector"),
     LibraryInfo(name="Mundo Libros", website_url="https://www.mundolibrospy.com", icon_url="http://www.mundolibrospy.com/img/cms/Mundo%20Libros.png", library_path="mundo"),
 ]
 
