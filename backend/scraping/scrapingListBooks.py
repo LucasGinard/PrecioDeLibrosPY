@@ -118,3 +118,9 @@ def scrape_mundo_libros_py(search_query: str) -> List[BookData]:
         return book_list
     except:
         return []
+    
+scraping_functions = {
+    "lpt": scrape_lpt,
+    "lector": scrape_el_lector,
+    "mundo": scrape_mundo_libros_py,
+}

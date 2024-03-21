@@ -4,7 +4,6 @@ from typing import Optional
 
 from pydantic import BaseModel
 
-from scraping.scrapingListBooks import scrape_el_lector, scrape_lpt, scrape_mundo_libros_py
 from scraping.scrapingDetailBook import scrape_detail_book_lpt, scrape_detail_book_el_lector, scrape_detail_book_mundo_libros_py
 
 class LibraryEnum(str, Enum):
@@ -23,12 +22,6 @@ libraries_info = [
     LibraryInfo(name="El Lector", website_url="https://ellector.com.py", icon_url="https://ellector.com.py/assets/img/logo_ellector_v2.svg", library_path="lector"),
     LibraryInfo(name="Mundo Libros", website_url="https://www.mundolibrospy.com", icon_url="http://www.mundolibrospy.com/img/cms/Mundo%20Libros.png", library_path="mundo"),
 ]
-
-scraping_functions = {
-    "lpt": scrape_lpt,
-    "lector": scrape_el_lector,
-    "mundo": scrape_mundo_libros_py,
-}
 
 scraping_detail_functions = {
     libraries_info[0].website_url : scrape_detail_book_lpt,

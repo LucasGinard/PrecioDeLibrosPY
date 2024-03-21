@@ -2,11 +2,11 @@ from fastapi import Depends, FastAPI, HTTPException, Path
 from fastapi.openapi.docs import get_swagger_ui_html, get_redoc_html
 from fastapi.params import Query
 from fastapi.staticfiles import StaticFiles
+
+from model.LibraryEnum import LibraryEnum, LibraryInfo,libraries_info,scraping_detail_functions, validate_library_detail
 from model.BookDetailData import BookDetailData
 
-from model.LibraryEnum import LibraryEnum, LibraryInfo,scraping_functions,libraries_info,scraping_detail_functions, validate_library_detail
-
-from scraping.scrapingListBooks import scrape_book
+from scraping.scrapingListBooks import scrape_book,scraping_functions
 from scraping.scrapingStockBook import scrape_stock_book_lpt
 
 from model.BookData import BookData
