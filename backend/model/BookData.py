@@ -1,9 +1,6 @@
 from pydantic import BaseModel, HttpUrl
 
-class BookLibraryInfo(BaseModel):
-    name: str
-    website_url: HttpUrl
-    icon_url: HttpUrl
+from model.LibraryEnum import LibraryInfo
 
 class BookData(BaseModel):
     title: str
@@ -11,4 +8,4 @@ class BookData(BaseModel):
     image_url: HttpUrl
     price: str
     details_url: HttpUrl
-    library:BookLibraryInfo
+    library:LibraryInfo
