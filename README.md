@@ -1,4 +1,4 @@
-# PrecioDeLibrosPY 📚
+# PrecioDeLibrosPY <img src="backend\static\books.256x256.png" height="30">
 
 ## Frontend 🎨
 
