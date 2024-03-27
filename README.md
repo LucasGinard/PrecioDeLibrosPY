@@ -2,6 +2,40 @@
 
 ## Frontend 🎨
 
+Claro, aquí está la sección de requisitos previos con un ejemplo similar al que solicitaste:
+
+### 📃 Requisitos previos
+
+- Descarga e instala Node.js desde [nodejs.org](https://nodejs.org/es/download/)
+
+## 🚀 Estructura del Proyecto
+
+```text
+/
+├── public/
+│   └── favicon.svg
+├── src/
+│   ├── components/
+│   ├── layouts/
+│   └── pages/
+└── package.json
+```
+
+Cualquier activo estático, como imágenes, puede colocarse en el directorio `public/`.
+
+## 🧞 Comandos
+
+Todos los comandos se ejecutan desde la carpeta **frontend** del proyecto, desde una terminal:
+
+| Comando                   | Acción                                           |
+| :------------------------ | :----------------------------------------------- |
+| `npm install`             | Instala dependencias                             |
+| `npm run dev`             | Inicia el servidor local en `localhost:4321`     |
+| `npm run build`           | Construye tu sitio de producción en `./dist/`    |
+| `npm run preview`         | Previsualiza tu construcción localmente antes de desplegar |
+| `npm run astro ...`       | Ejecuta comandos CLI como `astro add`, `astro check` |
+| `npm run astro -- --help` | Obtiene ayuda usando el CLI de Astro             |
+
 ## Backend 🐍
 ### Instrucciones para Levantar el Backend con FastAPI
 
