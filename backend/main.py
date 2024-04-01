@@ -2,6 +2,7 @@ from fastapi import Depends, FastAPI, HTTPException, Path
 from fastapi.openapi.docs import get_swagger_ui_html, get_redoc_html
 from fastapi.params import Query
 from fastapi.staticfiles import StaticFiles
+from fastapi.middleware.cors import CORSMiddleware
 
 from model.LibraryEnum import LibraryEnum, LibraryInfo,libraries_info,scraping_detail_functions, validate_library_detail
 from model.BookDetailData import BookDetailData
@@ -24,6 +25,15 @@ app = FastAPI(
 	redoc_url= None,
 	redoc_favicon_url=urlIcon
 )
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_methods=["*"],
+    allow_headers=["*"],
+    allow_credentials=True,
+)
+
 
 app.mount("/static", StaticFiles(directory="static"), name="static")
 
