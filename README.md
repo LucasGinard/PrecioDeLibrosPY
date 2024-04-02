@@ -2,9 +2,7 @@
 
 ## Frontend 🎨
 
-Claro, aquí está la sección de requisitos previos con un ejemplo similar al que solicitaste:
-
-### 📃 Requisitos previos
+### 📃 Requisitos previos para levantar el Front
 
 - Descarga e instala Node.js desde [nodejs.org](https://nodejs.org/es/download/)
 
@@ -42,7 +40,7 @@ Todos los comandos se ejecutan desde la carpeta **frontend** del proyecto, desde
 <details>
   <summary>Cómo levantar el Backend</summary>
 
-  ### 📃 Requisitos previos
+  ### 📃 Requisitos previos para el Back
   Asegúrate de tener Python y el paquete `venv` instalados antes de seguir estos pasos.
 
   - Descarga e instala Python desde [python.org](https://www.python.org/downloads/)
