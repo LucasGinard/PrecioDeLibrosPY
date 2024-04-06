@@ -4,8 +4,6 @@
 
 ### 📃 Requisitos previos para levantar el Front
 
-## Frontend 🎨
-
 <details>
   <summary>Cómo levantar el Frontend</summary>
 
