@@ -4,35 +4,79 @@
 
 ### 📃 Requisitos previos para levantar el Front
 
-- Descarga e instala Node.js desde [nodejs.org](https://nodejs.org/es/download/)
+## Frontend 🎨
 
-## 🚀 Estructura del Proyecto
+<details>
+  <summary>Cómo levantar el Frontend</summary>
 
-```text
-/
-├── public/
-│   └── favicon.svg
-├── src/
-│   ├── components/
-│   ├── layouts/
-│   └── pages/
-└── package.json
-```
+  - Descarga e instala Node.js desde [nodejs.org](https://nodejs.org/es/download/)
 
-Cualquier activo estático, como imágenes, puede colocarse en el directorio `public/`.
+  ## 🚀 Estructura del Proyecto
 
-## 🧞 Comandos
+  ```text
+  /
+  ├── public/
+  │   └── favicon.svg
+  ├── src/
+  │   ├── components/
+  │   ├── layouts/
+  │   └── pages/
+  └── package.json
+  ```
 
-Todos los comandos se ejecutan desde la carpeta **frontend** del proyecto, desde una terminal:
+  Cualquier activo estático, como imágenes, puede colocarse en el directorio `public/`.
 
-| Comando                   | Acción                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Instala dependencias                             |
-| `npm run dev`             | Inicia el servidor local en `localhost:4321`     |
-| `npm run build`           | Construye tu sitio de producción en `./dist/`    |
-| `npm run preview`         | Previsualiza tu construcción localmente antes de desplegar |
-| `npm run astro ...`       | Ejecuta comandos CLI como `astro add`, `astro check` |
-| `npm run astro -- --help` | Obtiene ayuda usando el CLI de Astro             |
+  ## 🧞 Comandos
+
+  Todos los comandos se ejecutan desde la carpeta **frontend** del proyecto, desde una terminal:
+
+  | Comando                   | Acción                                           |
+  | :------------------------ | :----------------------------------------------- |
+  | `npm install`             | Instala dependencias                             |
+  | `npm run dev`             | Inicia el servidor local en `localhost:4321`     |
+  | `npm run build`           | Construye tu sitio de producción en `./dist/`    |
+  | `npm run preview`         | Previsualiza tu construcción localmente antes de desplegar |
+  | `npm run astro ...`       | Ejecuta comandos CLI como `astro add`, `astro check` |
+  | `npm run astro -- --help` | Obtiene ayuda usando el CLI de Astro             |
+
+</details>
+
+### 📃 Prerequisites for Setting Up the Frontend
+
+<details>
+  <summary>How to Set Up the Frontend</summary>
+
+  - Download and install Node.js from [nodejs.org](https://nodejs.org/en/download/)
+
+  ## 🚀 Project Structure
+
+  ```text
+  /
+  ├── public/
+  │   └── favicon.svg
+  ├── src/
+  │   ├── components/
+  │   ├── layouts/
+  │   └── pages/
+  └── package.json
+  ```
+
+  Any static assets, such as images, can be placed in the `public/` directory.
+
+  ## 🧞 Commands
+
+  All commands are executed from the **frontend** folder of the project, in a terminal:
+
+  | Command                   | Action                                           |
+  | :------------------------ | :----------------------------------------------- |
+  | `npm install`             | Install dependencies                             |
+  | `npm run dev`             | Start the local server at `localhost:4321`       |
+  | `npm run build`           | Build your production site in `./dist/`          |
+  | `npm run preview`         | Preview your build locally before deployment     |
+  | `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
+  | `npm run astro -- --help` | Get help using the Astro CLI                      |
+
+</details>
 
 ## Backend 🐍
 ### Instrucciones para Levantar el Backend con FastAPI
