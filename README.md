@@ -2,10 +2,10 @@
 
 ## Frontend 🎨
 
-### 📃 Requisitos previos para levantar el Front
-
 <details>
   <summary>Cómo levantar el Frontend</summary>
+
+  ### 📃 Requisitos previos para levantar el Front
 
   - Descarga e instala Node.js desde [nodejs.org](https://nodejs.org/es/download/)
 
@@ -39,11 +39,11 @@
 
 </details>
 
-### 📃 Prerequisites for Setting Up the Frontend
-
 <details>
   <summary>How to Set Up the Frontend</summary>
 
+  ### 📃 Prerequisites for Setting Up the Frontend
+  
   - Download and install Node.js from [nodejs.org](https://nodejs.org/en/download/)
 
   ## 🚀 Project Structure
