@@ -1,6 +1,7 @@
 
 from enum import Enum
 from typing import Optional
+from urllib.parse import unquote
 
 from pydantic import BaseModel
 
@@ -30,6 +31,7 @@ scraping_detail_functions = {
 }
 
 def validate_library_detail(detailLink: str) -> Optional[str]:
+    detailLink = unquote(detailLink)
     for library in libraries_info:
         if library.website_url in detailLink:
             return library.website_url
