@@ -59,6 +59,10 @@ def scrape_el_lector(search_query: str) -> List[BookData]:
         
         if books_container:
             for book_div in books_container.find_all('div', class_='col-30 col-sm-20 col-md-15 col-lg-12 product-item'):
+
+                if 'out-stock' in book_div.get('class', []):
+                    continue
+                
                 title = book_div.select_one('.card-title a').text.strip()
                 author = book_div.select_one('.product-author a').text.strip()
                 price = book_div.select_one('.product-price .price-amount').text.strip().replace('₲', 'Gs.')
