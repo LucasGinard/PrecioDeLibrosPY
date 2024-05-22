@@ -1,4 +1,5 @@
 from typing import Optional
+from pydantic import HttpUrl
 import requests
 
 from bs4 import BeautifulSoup
@@ -58,29 +59,35 @@ def scrape_detail_book_el_lector(detailLink: str) ->  Optional[BookDetailData]:
     try:
         response = requests.get(detailLink)
         soup = BeautifulSoup(response.text, 'html.parser')
+        section = soup.select_one('section.top-section.divider-border-top.single-product.px-2')
 
-        title = soup.select_one('.el-book-title-author h2').text.strip()
+        if section:
+            title = section.select_one('h1.product_title.entry-title').text.strip()
 
-        author = soup.select_one('.el-book-title-author h5 a').text.strip()
+            author_tag = soup.find('div', class_='product-brand')
+            author = author_tag.find('a').text.strip()
 
-        image_url = soup.select_one('#productSlider a img')['src']
+            image = soup.find('img',class_='w-100')['src']
 
-        price = soup.select_one('.el-pd-price span.precio-actual').text.strip()
+            description = soup.find('p', class_='product-description-text text-justify').get_text(strip=True)
 
-        description_element = soup.select_one('.col-12.el-producto-descripcion')
-        paragraphs = description_element.find_all('p') if description_element else []
+            categorysDiv = soup.find('span',class_='w-posted_in')
+
+
+            isbn_tag = soup.find('span', class_='sku')
+            isbn = isbn_tag.text.strip()
+
+            return BookDetailData(
+                title=title,
+                author=author,
+                image_url=HttpUrl(url=f"https://ellector.com.py{image}"),
+                price="price",
+                description=description,
+                category=["categories"],
+                isbn=isbn
+            )
         
-        description = '\n'.join(paragraph.text.strip() for paragraph in paragraphs)
-
-        return BookDetailData(
-            title=title,
-            author=author,
-            image_url=image_url,
-            price=price,
-            description=description,
-            category=["categories"],
-            isbn="isbn"
-        )
+        return None
     except:
         return None
 
