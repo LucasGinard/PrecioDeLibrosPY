@@ -69,10 +69,14 @@ def scrape_detail_book_el_lector(detailLink: str) ->  Optional[BookDetailData]:
 
             image = soup.find('img',class_='w-100')['src']
 
-            description = soup.find('p', class_='product-description-text text-justify').get_text(strip=True)
+            price_element = soup.find('div', class_='price')
+            price = price_element.text.strip().replace("₲","Gs. ")
 
-            categorysDiv = soup.find('span',class_='w-posted_in')
+            description = soup.find('p', class_='product-description-text text-justify').get_text(separator='\n',strip=True)
 
+            posted_in = soup.find('span', class_='posted_in')
+            categories = posted_in.find_all('a')
+            category_names = [category.text for category in categories]
 
             isbn_tag = soup.find('span', class_='sku')
             isbn = isbn_tag.text.strip()
@@ -81,9 +85,9 @@ def scrape_detail_book_el_lector(detailLink: str) ->  Optional[BookDetailData]:
                 title=title,
                 author=author,
                 image_url=HttpUrl(url=f"https://ellector.com.py{image}"),
-                price="price",
+                price=price,
                 description=description,
-                category=["categories"],
+                category=category_names,
                 isbn=isbn
             )
         
@@ -109,18 +113,18 @@ def scrape_detail_book_mundo_libros_py(detailLink: str) -> Optional[BookDetailDa
 
         description = soup.select_one('.product-description').text.strip()
 
-        tags_container = soup.find('div', class_='product-info-tags')
-        tags_links = tags_container.find_all('a')
-        categories = [tag.get_text(strip=True) for tag in tags_links]
+        tagsContainer = soup.find('div', class_='product-info-tags')
+        tagsLinks = tagsContainer.find_all('a')
+        categories = [tag.get_text(strip=True) for tag in tagsLinks]
 
         isbn = ""
 
-        reference_div = soup.find('div', class_='product-reference pro_extra_info flex_container')
-        if reference_div:
-            reference_label = reference_div.find('span', class_='pro_extra_info_label')
+        referenceDiv = soup.find('div', class_='product-reference pro_extra_info flex_container')
+        if referenceDiv:
+            referenceLabel = referenceDiv.find('span', class_='pro_extra_info_label')
 
-            if reference_label and 'Referencia' in reference_label.text:
-                isbn = reference_div.find('div', class_='pro_extra_info_content').text.strip()
+            if referenceLabel and 'Referencia' in referenceLabel.text:
+                isbn = referenceLabel.find('div', class_='pro_extra_info_content').text.strip()
 
         return BookDetailData(
             title=title,
